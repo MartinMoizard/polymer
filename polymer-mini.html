@@ -1098,6 +1098,15 @@ this._finishDebouncer = Polymer.Debounce(this._finishDebouncer, this._finishFlus
 },
 _finishFlush: function () {
 Polymer.dom._debouncers = [];
+},
+get deepActiveElement() {
+var node = document.activeElement;
+if (Polymer.Settings.useNativeShadow) {
+while (node.shadowRoot && node.shadowRoot.activeElement) {
+node = node.shadowRoot.activeElement;
+}
+}
+return Polymer.dom(node).node;
 }
 });
 function getLightChildren(node) {
