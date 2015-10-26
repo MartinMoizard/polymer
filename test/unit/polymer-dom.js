@@ -1,12 +1,12 @@
-suite('Polymer.dom', function() {
+suite('Polymer.dom', function () {
 
   var testElement;
 
-  suiteSetup(function() {
+  suiteSetup(function () {
     testElement = document.querySelector('x-test');
   })
 
-  test('querySelector (local)', function() {
+  test('querySelector (local)', function () {
     var projected = Polymer.dom(testElement.root).querySelector('#projected');
     assert.equal(projected.textContent, 'projected');
     var p2 = Polymer.dom(testElement).querySelector('#projected');
@@ -19,7 +19,7 @@ suite('Polymer.dom', function() {
     assert.equal(p.is, 'x-project');
   });
 
-  test('querySelectorAll (local)', function() {
+  test('querySelectorAll (local)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var re = Polymer.dom(rere.root).querySelector('x-reproject');
     var p = Polymer.dom(re.root).querySelector('x-project');
@@ -33,7 +33,7 @@ suite('Polymer.dom', function() {
     assert.equal(pList.length, 1);
   });
 
-  test('querySelector (light)', function() {
+  test('querySelector (light)', function () {
     var projected = Polymer.dom(testElement.root).querySelector('#projected');
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var re = Polymer.dom(rere.root).querySelector('x-reproject');
@@ -43,7 +43,7 @@ suite('Polymer.dom', function() {
     assert(Polymer.dom(p).querySelector('content'));
   });
 
-  test('querySelectorAll (light)', function() {
+  test('querySelectorAll (light)', function () {
     var projected = Polymer.dom(testElement.root).querySelector('#projected');
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var re = Polymer.dom(rere.root).querySelector('x-reproject');
@@ -53,7 +53,7 @@ suite('Polymer.dom', function() {
     assert(Polymer.dom(p).querySelectorAll('content').length, 1);
   });
 
-  test('querySelectorAll with dom-repeat', function() {
+  test('querySelectorAll with dom-repeat', function () {
     var el = document.createElement('polymer-dom-repeat');
     document.body.appendChild(el);
     Polymer.dom.flush();
@@ -61,11 +61,11 @@ suite('Polymer.dom', function() {
     document.body.removeChild(el);
   });
 
-  test('querySelector document', function() {
+  test('querySelector document', function () {
     assert.ok(Polymer.dom().querySelector('body'));
   });
 
-  test('projection', function() {
+  test('projection', function () {
     var projected = Polymer.dom(testElement.root).querySelector('#projected');
     assert.equal(projected.textContent, 'projected');
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
@@ -84,7 +84,7 @@ suite('Polymer.dom', function() {
     assert.deepEqual(Polymer.dom(projected).getDestinationInsertionPoints(), ip$);
   });
 
-  test('distributeContent', function() {
+  test('distributeContent', function () {
     var projected = Polymer.dom(testElement.root).querySelector('#projected');
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var c1 = Polymer.dom(rere.root).querySelector('content');
@@ -110,7 +110,7 @@ suite('Polymer.dom', function() {
     assert.equal(p.is, 'x-project');
   });
 
-  test('distributeContent (reproject)', function() {
+  test('distributeContent (reproject)', function () {
     var select = document.querySelector('x-select1');
     var child = Polymer.dom(select).firstElementChild;
     var c1 = Polymer.dom(select.root).querySelector('content');
@@ -161,7 +161,7 @@ suite('Polymer.dom', function() {
     assert.deepEqual(Polymer.dom(child).getDestinationInsertionPoints(), []);
   });
 
-  test('Polymer.dom.setAttribute (reproject)', function() {
+  test('Polymer.dom.setAttribute (reproject)', function () {
     var select = document.querySelector('x-select1');
     var child = Polymer.dom(select).firstElementChild;
     var c1 = Polymer.dom(select.root).querySelector('content');
@@ -203,7 +203,7 @@ suite('Polymer.dom', function() {
     assert.deepEqual(Polymer.dom(child).getDestinationInsertionPoints(), []);
   });
 
-  test('Polymer.dom.classListAdd/Remove/Toggle/Contains (reproject)', function() {
+  test('Polymer.dom.classListAdd/Remove/Toggle/Contains (reproject)', function () {
     var select = document.querySelector('x-select-class1');
     var child = Polymer.dom(select).firstElementChild;
     var c1 = Polymer.dom(select.root).querySelector('content');
@@ -254,7 +254,7 @@ suite('Polymer.dom', function() {
     assert.deepEqual(Polymer.dom(child).getDestinationInsertionPoints(), []);
   });
 
-  test('re-distribution results in correct logical tree when outer host remove a node from pool of inner host', function() {
+  test('re-distribution results in correct logical tree when outer host remove a node from pool of inner host', function () {
     var r = document.querySelector('x-redistribute-a-b');
     var rc = Polymer.dom(r.root).querySelectorAll('content');
     var ec1 = Polymer.dom(r.$.echo1.root).querySelector('content');
@@ -286,7 +286,7 @@ suite('Polymer.dom', function() {
     assert.deepEqual(Polymer.dom(ec2).getDistributedNodes(), []);
   });
 
-  test('without a host setting hostAttributes/reflecting properties provokes distribution', function() {
+  test('without a host setting hostAttributes/reflecting properties provokes distribution', function () {
     var e = document.querySelector('x-select-attr');
     var ip$ = Polymer.dom(e.root).querySelectorAll('content');
     var c = Polymer.dom(e).firstElementChild;
@@ -299,11 +299,11 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(c).getDestinationInsertionPoints()[0], ip$[1], 'child not distributed based on reflecting attribute')
   });
 
-  test('within a host setting hostAttributes/reflecting properties provokes distribution', function() {
+  test('within a host setting hostAttributes/reflecting properties provokes distribution', function () {
     // TODO(sorvell): disabling this test failure until it can be diagnosed
     // filed as issue #1595
     if (window.ShadowDOMPolyfill) {
-        return;
+      return;
     }
     var e = document.querySelector('x-compose-select-attr');
     var ip$ = Polymer.dom(e.$.select.root).querySelectorAll('content');
@@ -321,7 +321,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(c2).getDestinationInsertionPoints()[0], ip$[0], 'child not distributed based on default value');
   });
 
-  test('appendChild (light)', function() {
+  test('appendChild (light)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var s = document.createElement('span');
     s.id = 'added';
@@ -330,7 +330,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(testElement.root).querySelector('#added'), s);
   });
 
-  test('insertBefore (light)', function() {
+  test('insertBefore (light)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var ref = Polymer.dom(testElement.root).querySelector('#added');
     var s = document.createElement('span');
@@ -340,7 +340,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(testElement.root).querySelector('#added2'), s);
   });
 
-  test('removeChild (light)', function() {
+  test('removeChild (light)', function () {
     var added = Polymer.dom(testElement.root).querySelector('#added');
     var added2 = Polymer.dom(testElement.root).querySelector('#added2');
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
@@ -350,7 +350,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(testElement.root).querySelectorAll('*').length, 2);
   });
 
-  test('appendChild (local)', function() {
+  test('appendChild (local)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var s = document.createElement('span');
     s.id = 'local';
@@ -359,7 +359,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(rere.root).querySelector('#local'), s);
   });
 
-  test('insertBefore (local)', function() {
+  test('insertBefore (local)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var ref = Polymer.dom(testElement.root).querySelector('#local');
     var s = document.createElement('span');
@@ -369,7 +369,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(rere.root).querySelector('#local2'), s);
   });
 
-  test('removeChild (local)', function() {
+  test('removeChild (local)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var local = Polymer.dom(rere.root).querySelector('#local');
     var local2 = Polymer.dom(rere.root).querySelector('#local2');
@@ -378,7 +378,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(rere.root).querySelectorAll('#local').length, 0);
   });
 
-  test('localDom.insertBefore first element results in minimal change', function() {
+  test('localDom.insertBefore first element results in minimal change', function () {
     var children = Polymer.dom(testElement.root).childNodes;
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     assert.equal(rere.attachedCount, 1);
@@ -392,11 +392,11 @@ suite('Polymer.dom', function() {
     assert.equal(rere.attachedCount, 1);
   });
 
-  test('appendChild (fragment, local)', function() {
+  test('appendChild (fragment, local)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var fragment = document.createDocumentFragment();
     var childCount = 5;
-    for (var i=0; i < childCount; i++) {
+    for (var i = 0; i < childCount; i++) {
       var s = document.createElement('span');
       s.textContent = i;
       fragment.appendChild(s);
@@ -404,17 +404,17 @@ suite('Polymer.dom', function() {
     Polymer.dom(rere.root).appendChild(fragment);
     var added = Polymer.dom(rere.root).querySelectorAll('span');
     assert.equal(added.length, childCount);
-    for (var i=0; i < added.length; i++) {
+    for (var i = 0; i < added.length; i++) {
       Polymer.dom(rere.root).removeChild(added[i]);
     }
     assert.equal(Polymer.dom(rere.root).querySelectorAll('span').length, 0);
   });
 
-  test('insertBefore (fragment, local)', function() {
+  test('insertBefore (fragment, local)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var fragment = document.createDocumentFragment();
     var childCount = 5;
-    for (var i=0; i < childCount; i++) {
+    for (var i = 0; i < childCount; i++) {
       var s = document.createElement('span');
       s.textContent = i;
       fragment.appendChild(s);
@@ -424,15 +424,15 @@ suite('Polymer.dom', function() {
     Polymer.dom(rere.root).appendChild(l);
     Polymer.dom(rere.root).insertBefore(fragment, l);
     var added = Polymer.dom(rere.root).querySelectorAll('span');
-    assert.equal(added.length, childCount+1);
-    assert.equal(added[added.length-1], l);
-    for (var i=0; i < added.length; i++) {
+    assert.equal(added.length, childCount + 1);
+    assert.equal(added[added.length - 1], l);
+    for (var i = 0; i < added.length; i++) {
       Polymer.dom(rere.root).removeChild(added[i]);
     }
     assert.equal(Polymer.dom(rere.root).querySelectorAll('span').length, 0);
   });
 
-  test('mutations using fragments without logical dom', function() {
+  test('mutations using fragments without logical dom', function () {
     var d = document.createElement('div');
     document.body.appendChild(d);
     assert.equal(Polymer.dom(d).childNodes.length, 0);
@@ -450,7 +450,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(d).lastChild, c1);
   });
 
-  test('appendChild interacts with unmanaged parent tree', function() {
+  test('appendChild interacts with unmanaged parent tree', function () {
     var container = document.querySelector('#container');
     var echo = Polymer.dom(container).firstElementChild;
     assert.equal(echo.localName, 'x-echo');
@@ -478,7 +478,7 @@ suite('Polymer.dom', function() {
     assert.equal(Polymer.dom(s1).nextElementSibling, s2);
   });
 
-  test('distribute (forced)', function() {
+  test('distribute (forced)', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var re = Polymer.dom(rere.root).querySelector('x-reproject');
     var p = Polymer.dom(re.root).querySelector('x-project');
@@ -505,7 +505,7 @@ suite('Polymer.dom', function() {
     }
   });
 
-  test('queryDistributedElements', function() {
+  test('queryDistributedElements', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var re = Polymer.dom(rere.root).querySelector('x-reproject');
     var p = Polymer.dom(re.root).querySelector('x-project');
@@ -516,7 +516,7 @@ suite('Polymer.dom', function() {
 
   });
 
-  test('getEffectiveChildNodes', function() {
+  test('getEffectiveChildNodes', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var re = Polymer.dom(rere.root).querySelector('x-reproject');
     var projected = Polymer.dom(testElement.root).querySelector('#projected');
@@ -525,7 +525,7 @@ suite('Polymer.dom', function() {
     assert.equal(c$[1], projected);
   });
 
-  test('Polymer.dom.querySelector', function() {
+  test('Polymer.dom.querySelector', function () {
     var test = Polymer.dom().querySelector('x-test');
     var rere = Polymer.dom().querySelector('x-rereproject');
     var projected = Polymer.dom().querySelector('#projected');
@@ -534,12 +534,12 @@ suite('Polymer.dom', function() {
     assert.notOk(projected);
   });
 
-  test('Polymer.dom event', function() {
+  test('Polymer.dom event', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var re = Polymer.dom(rere.root).querySelector('x-reproject');
     var p = Polymer.dom(re.root).querySelector('x-project');
     var eventHandled = 0;
-    testElement.addEventListener('test-event', function(e) {
+    testElement.addEventListener('test-event', function (e) {
       eventHandled++;
       assert.equal(Polymer.dom(e).rootTarget, p);
       assert.equal(Polymer.dom(e).localTarget, testElement);
@@ -553,7 +553,7 @@ suite('Polymer.dom', function() {
       assert.equal(path[6], testElement);
     });
 
-    rere.addEventListener('test-event', function(e) {
+    rere.addEventListener('test-event', function (e) {
       eventHandled++;
       assert.equal(Polymer.dom(e).localTarget, rere);
     });
@@ -562,18 +562,18 @@ suite('Polymer.dom', function() {
     assert.equal(eventHandled, 2);
   });
 
-  test('parentNode', function() {
+  test('parentNode', function () {
     var rere = Polymer.dom(testElement.root).querySelector('x-rereproject');
     var projected = Polymer.dom(testElement.root).querySelector('#projected');
     assert.equal(Polymer.dom(testElement).parentNode, wrap(document.body));
     assert.equal(Polymer.dom(projected).parentNode, rere);
   });
 
-  test('Polymer.dom.childNodes is an array', function() {
+  test('Polymer.dom.childNodes is an array', function () {
     assert.isTrue(Array.isArray(Polymer.dom(document.body).childNodes));
   });
 
-  test('Polymer.dom cloneNode shallow', function() {
+  test('Polymer.dom cloneNode shallow', function () {
     var a = document.createElement('div');
     a.innerHTML = '<x-clonate><span>1</span><span>2</span></x-clonate>';
     var b = Polymer.dom(Polymer.dom(a).firstElementChild).cloneNode();
@@ -584,7 +584,7 @@ suite('Polymer.dom', function() {
     }
   });
 
-  test('Polymer.dom cloneNode deep', function() {
+  test('Polymer.dom cloneNode deep', function () {
     var a = document.createElement('div');
     a.innerHTML = '<x-clonate><span>1</span><span>2</span></x-clonate>';
     var b = Polymer.dom(a).cloneNode(true);
@@ -595,7 +595,7 @@ suite('Polymer.dom', function() {
     }
   });
 
-  test('Polymer.dom importNode shallow', function() {
+  test('Polymer.dom importNode shallow', function () {
     var a = document.createElement('div');
     a.innerHTML = '<x-clonate><span>1</span><span>2</span></x-clonate>';
     var b = Polymer.dom(document).importNode(Polymer.dom(a).firstElementChild);
@@ -606,7 +606,7 @@ suite('Polymer.dom', function() {
     }
   });
 
-  test('Polymer.dom importNode deep', function() {
+  test('Polymer.dom importNode deep', function () {
     var a = document.createElement('div');
     a.innerHTML = '<x-clonate><span>1</span><span>2</span></x-clonate>';
     var b = Polymer.dom(document).importNode(a, true);
@@ -617,7 +617,7 @@ suite('Polymer.dom', function() {
     }
   });
 
-  test('flush causes attached and re-flushes if necessary', function(done) {
+  test('flush causes attached and re-flushes if necessary', function (done) {
     var a = document.createElement('x-attach1');
     Polymer.dom(document.body).appendChild(a);
     Polymer.dom.flush();
@@ -635,7 +635,7 @@ suite('Polymer.dom', function() {
 
   });
 
-  test('Polymer.dom.deepActiveElement search', function() {
+  test('Polymer.dom.deepActiveElement search', function () {
     var a = document.createElement('x-trivial');
     var b = document.createElement('x-trivial');
     Polymer.dom(b).setAttribute('tabindex', 1);
@@ -648,7 +648,7 @@ suite('Polymer.dom', function() {
     Polymer.dom.flush();
   });
 
-  test('Polymer.dom.deepActiveElement complex search', function(done) {
+  test('Polymer.dom.deepActiveElement complex search', function (done) {
     var focusable = document.querySelector('#focusable');
     var b = Polymer.dom(focusable.root).querySelector('[tabindex="1"]');
     b.focus();
@@ -656,17 +656,49 @@ suite('Polymer.dom', function() {
     done();
   });
 
+  test('Polymer.dom should have one child', function () {
+    if (Polymer.Settings.useNativeShadow) {
+      return;
+    }
+    var a = document.querySelector('#focusable');
+    if (Polymer.Settings.useShadow) {
+      assert.equal(a.childElementCount, 0);
+      assert.equal(window.unwrap(a).childElementCount, 1);
+    } else {
+      assert.equal(a.childElementCount, 1);
+      assert.equal(Polymer.dom(a).children.length, 0);
+    }
+
+  });
+
+  test('Polymer.dom should have one child with a dynamic allocation', function () {
+    if (Polymer.Settings.useNativeShadow) {
+      return;
+    }
+    var a = document.createElement('x-focusable');
+    Polymer.dom(document.body).appendChild(a);
+    Polymer.dom.flush();
+    if (Polymer.Settings.useShadow) {
+      assert.equal(a.childElementCount, 0);
+      assert.equal(window.unwrap(a).childElementCount, 1);
+    } else {
+      assert.equal(a.childElementCount, 1);
+      assert.equal(Polymer.dom(a).children.length, 0);
+    }
+    Polymer.dom(document.body).removeChild(a);
+  });
+
 });
 
-suite('Polymer.dom accessors', function() {
+suite('Polymer.dom accessors', function () {
   var noDistribute, distribute;
 
-  suiteSetup(function() {
+  suiteSetup(function () {
     noDistribute = document.querySelector('.accessors x-test-no-distribute');
     distribute = document.querySelector('.accessors x-project');
   });
 
-  test('Polymer.dom node accessors (no distribute)', function() {
+  test('Polymer.dom node accessors (no distribute)', function () {
     var child = Polymer.dom(noDistribute).children[0];
     assert.isTrue(child.classList.contains('child'), 'test node could not be found')
     var before = document.createElement('div');
@@ -681,7 +713,7 @@ suite('Polymer.dom accessors', function() {
     assert.equal(Polymer.dom(child).previousSibling, before, 'previousSibling incorrect');
   });
 
-  test('Polymer.dom node accessors (distribute)', function() {
+  test('Polymer.dom node accessors (distribute)', function () {
     var child = Polymer.dom(distribute).children[0];
     assert.isTrue(child.classList.contains('child'), 'test node could not be found')
     var before = document.createElement('div');
@@ -696,7 +728,7 @@ suite('Polymer.dom accessors', function() {
     assert.equal(Polymer.dom(child).previousSibling, before, 'previousSibling incorrect');
   });
 
-  test('Polymer.dom element accessors (no distribute)', function() {
+  test('Polymer.dom element accessors (no distribute)', function () {
     var parent = document.createElement('x-test-no-distribute');
     var child = document.createElement('div');
     Polymer.dom(parent).appendChild(child);
@@ -712,7 +744,7 @@ suite('Polymer.dom accessors', function() {
     assert.equal(Polymer.dom(child).previousElementSibling, before, 'previousElementSibling incorrect');
   });
 
-  test('Polymer.dom element accessors (distribute)', function() {
+  test('Polymer.dom element accessors (distribute)', function () {
     var parent = document.createElement('x-project');
     var child = document.createElement('div');
     Polymer.dom(parent).appendChild(child);
@@ -728,7 +760,7 @@ suite('Polymer.dom accessors', function() {
     assert.equal(Polymer.dom(child).previousElementSibling, before, 'previousElementSibling incorrect');
   });
 
-  test('Polymer.dom textContent', function() {
+  test('Polymer.dom textContent', function () {
     var testElement = document.createElement('x-project');
     Polymer.dom(testElement).textContent = 'Hello World';
     assert.equal(Polymer.dom(testElement).textContent, 'Hello World', 'textContent getter incorrect');
@@ -750,12 +782,12 @@ suite('Polymer.dom accessors', function() {
     assert.equal(commentNode.textContent, 'bar', 'text content setter on commentnode incorrect');
   });
 
-  test('Polymer.dom innerHTML', function() {
+  test('Polymer.dom innerHTML', function () {
     var testElement = document.createElement('x-project');
     Polymer.dom(testElement).innerHTML = '<div>Hello World</div><div>2</div><div>3</div>';
     var added = Polymer.dom(testElement).firstChild;
-    assert.equal(added.textContent , 'Hello World', 'innerHTML setter incorrect');
-    assert.equal(Polymer.dom(testElement).innerHTML , '<div>Hello World</div><div>2</div><div>3</div>', 'innerHTML getter incorrect');
+    assert.equal(added.textContent, 'Hello World', 'innerHTML setter incorrect');
+    assert.equal(Polymer.dom(testElement).innerHTML, '<div>Hello World</div><div>2</div><div>3</div>', 'innerHTML getter incorrect');
     if (testElement.shadyRoot) {
       Polymer.dom.flush();
       assert.equal(testElement._composedChildren[1], added, 'innerHTML setter composed incorrectly');
@@ -764,31 +796,31 @@ suite('Polymer.dom accessors', function() {
     }
   });
 
-  test('Polymer.dom innerHTML (non-composed)', function() {
+  test('Polymer.dom innerHTML (non-composed)', function () {
     var testElement = document.createElement('div');
     document.body.appendChild(testElement);
     Polymer.dom(testElement).innerHTML = '<div>Hello World</div><div>2</div><div>3</div>';
     var added = Polymer.dom(testElement).firstChild;
-    assert.equal(added.textContent , 'Hello World', 'innerHTML setter incorrect');
-    assert.equal(Polymer.dom(testElement).innerHTML , '<div>Hello World</div><div>2</div><div>3</div>', 'innerHTML getter incorrect');
+    assert.equal(added.textContent, 'Hello World', 'innerHTML setter incorrect');
+    assert.equal(Polymer.dom(testElement).innerHTML, '<div>Hello World</div><div>2</div><div>3</div>', 'innerHTML getter incorrect');
     assert.equal(testElement.children.length, 3);
   });
 
 });
 
-suite('Polymer.dom non-distributed elements', function() {
+suite('Polymer.dom non-distributed elements', function () {
 
   var nd;
 
-  suiteSetup(function() {
+  suiteSetup(function () {
     nd = document.querySelector('#noDistribute');
   });
 
-  test('Polymer.dom finds undistributed child', function() {
+  test('Polymer.dom finds undistributed child', function () {
     assert.ok(Polymer.dom(nd).children.length, 2, 'light children includes distributed and non-distributed nodes');
   });
 
-  test('Polymer.dom removes/adds undistributed child', function() {
+  test('Polymer.dom removes/adds undistributed child', function () {
     var b = Polymer.dom(nd).children[0];
     assert.equal(Polymer.dom(b).getDestinationInsertionPoints().length, 0, 'element improperly distributed');
     Polymer.dom(nd).removeChild(b);
@@ -807,7 +839,7 @@ suite('Polymer.dom non-distributed elements', function() {
     assert.equal(Polymer.dom(nd).children.length, 2, 'children length not decremented due to element removal');
   });
 
-  test('Polymer.dom removes/adds between light and local dom', function() {
+  test('Polymer.dom removes/adds between light and local dom', function () {
     var b = Polymer.dom(nd).children[1];
     assert.equal(Polymer.dom(b).getDestinationInsertionPoints().length, 0, 'element improperly distributed');
     Polymer.dom(nd.root).appendChild(b);
@@ -820,7 +852,7 @@ suite('Polymer.dom non-distributed elements', function() {
     assert.equal(Polymer.dom(nd.root).children.length, 1, 'root children length not decremented due to element removal');
   });
 
-  test('distributeContent correctly distributes changes to light dom', function() {
+  test('distributeContent correctly distributes changes to light dom', function () {
     var shady = !Polymer.Settings.useShadow;
     function testNoAttr() {
       assert.equal(Polymer.dom(child).getDestinationInsertionPoints()[0], d.$.notTestContent, 'child not distributed logically');
@@ -861,7 +893,7 @@ suite('Polymer.dom non-distributed elements', function() {
     testWithAttr();
   });
 
-  test('getOwnerRoot', function() {
+  test('getOwnerRoot', function () {
     var test = document.createElement('div');
     var c1 = document.createElement('x-compose');
     var c2 = document.createElement('x-compose');
@@ -875,7 +907,7 @@ suite('Polymer.dom non-distributed elements', function() {
     assert.notOk(Polymer.dom(test).getOwnerRoot(), 'getOwnerRoot incorrect for child moved from a root to no root');
   });
 
-  test('getOwnerRoot when out of tree', function() {
+  test('getOwnerRoot when out of tree', function () {
     var test = document.createElement('div');
     assert.notOk(Polymer.dom(test).getOwnerRoot(), 'getOwnerRoot incorrect when not in root');
     var c1 = document.createElement('x-compose');
@@ -891,7 +923,7 @@ suite('Polymer.dom non-distributed elements', function() {
     assert.equal(Polymer.dom(test).getOwnerRoot(), c1.root, 'getOwnerRoot incorrect for child added to element in root');
   });
 
-  test('getOwnerRoot, subtree', function() {
+  test('getOwnerRoot, subtree', function () {
     var test = document.createElement('div');
     var testChild = document.createElement('div');
     test.appendChild(testChild);
@@ -912,7 +944,7 @@ suite('Polymer.dom non-distributed elements', function() {
     assert.equal(Polymer.dom(testChild).getOwnerRoot(), c1.root, 'getOwnerRoot incorrect for sub-child added to element in root');
   });
 
-  test('getOwnerRoot (paper-ripple use case)', function() {
+  test('getOwnerRoot (paper-ripple use case)', function () {
     var test = document.createElement('div');
     // child
     var d = document.createElement('div');
@@ -929,12 +961,12 @@ suite('Polymer.dom non-distributed elements', function() {
     assert.notOk(Polymer.dom(test).getOwnerRoot(), 'getOwnerRoot incorrect for child moved from a root to no root');
   });
 
-  test('getDistributedNodes on non-content element', function() {
+  test('getDistributedNodes on non-content element', function () {
     assert.equal(Polymer.dom(document.createElement('div')).getDistributedNodes().length, 0);
-        assert.equal(Polymer.dom().getDistributedNodes().length, 0);
+    assert.equal(Polymer.dom().getDistributedNodes().length, 0);
   });
 
-  test('getDestinationInsertionPoints on non-distributable element', function() {
+  test('getDestinationInsertionPoints on non-distributable element', function () {
     assert.equal(Polymer.dom(document.createElement('div')).getDestinationInsertionPoints().length, 0);
     assert.equal(Polymer.dom(document).getDestinationInsertionPoints().length, 0);
   });
